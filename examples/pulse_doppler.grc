@@ -28,7 +28,7 @@ options:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 8]
+    coordinate: [0, 100.0]
     rotation: 0
     state: enabled
 
@@ -42,21 +42,36 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 12.0]
+    coordinate: [344, 124.0]
     rotation: 0
     state: enabled
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: 100e6
+    value: 40e6
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [184, 132.0]
     rotation: 0
     state: enabled
+- name: blocks_message_debug_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    en_uvec: 'True'
+    log_level: info
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1008, 496.0]
+    rotation: 0
+    state: disabled
 - name: plasma_cw_to_pulsed_0
   id: plasma_cw_to_pulsed
   parameters:
@@ -99,7 +114,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 388.0]
+    coordinate: [112, 348.0]
     rotation: 0
     state: true
 - name: plasma_pulse_doppler_0
@@ -144,7 +159,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    center_freq: 2.4e9
+    center_freq: 5.9e9
     center_freq_key: core:tx_freq
     comment: ''
     depth: '10'
@@ -162,7 +177,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1288, 252.0]
+    coordinate: [1280, 220.0]
     rotation: 0
     state: enabled
 - name: plasma_usrp_radar_0
@@ -170,27 +185,27 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    args: '"addr=192.168.30.2,use_dpdk=1"'
-    cal_file: '"/home/shane/.uhd/delay.json"'
+    args: ''
+    cal_file: /home/sumin/workspace/delay.json
     comment: ''
     elevate_priority: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
-    rx_freq: 2.4e9
+    rx_freq: 5.0e9
     rx_freq_key: core:rx_freq
-    rx_gain: '10'
+    rx_gain: '50'
     samp_rate: samp_rate
     sample_start_key: core:sample_start
     start_delay: '0.1'
-    tx_freq: 2.4e9
+    tx_freq: 5.0e9
     tx_freq_key: core:tx_freq
-    tx_gain: '10'
+    tx_gain: '90'
     verbose: 'False'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [680, 468.0]
+    coordinate: [656, 460.0]
     rotation: 0
     state: true
 
@@ -200,7 +215,9 @@ connections:
 - [plasma_lfm_source_0, out, plasma_pulse_doppler_0, tx]
 - [plasma_pulse_doppler_0, out, plasma_range_doppler_sink_0, in]
 - [plasma_pulse_to_cpi_0, out, plasma_pulse_doppler_0, rx]
+- [plasma_usrp_radar_0, out, blocks_message_debug_0, print]
 - [plasma_usrp_radar_0, out, plasma_pulse_to_cpi_0, in]
 
 metadata:
   file_format: 1
+  grc_version: 3.10.7.0

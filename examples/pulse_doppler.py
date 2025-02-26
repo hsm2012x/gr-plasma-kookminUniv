@@ -137,6 +137,19 @@ class pulse_doppler(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.qwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_win)
         self.plasma_usrp_radar_0 = plasma.usrp_radar("num_send_frames=512,num_recv_frames=512")
+        # self.plasma_usrp_radar_0 = plasma.usrp_radar(
+        #         args="",
+        #         tx_rate=1.0e6,   # 예시 값 (적절한 값으로 수정)
+        #         rx_rate=1.0e6,
+        #         tx_freq=2.4e9,
+        #         rx_freq=2.4e9,
+        #         tx_gain=30.0,
+        #         rx_gain=30.0,
+        #         start_delay=0.1,
+        #         elevate_priority=False,
+        #         cal_file="",
+        #         verbose=True)
+
         self.plasma_usrp_radar_0.set_metadata_keys('core:frequency', 'core:sample_start')
         self.plasma_usrp_radar_0.set_samp_rate(samp_rate)
         self.plasma_usrp_radar_0.set_tx_gain(50)
