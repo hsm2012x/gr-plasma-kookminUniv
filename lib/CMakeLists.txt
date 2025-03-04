@@ -30,6 +30,8 @@ list(APPEND plasma_sources
     pdu_file_source_impl.cc
     pulse_doppler_impl.cc
     cw_to_pulsed_impl.cc
+    advanced_doppler_processing_impl.cc # Add by sumin
+
     )
 
 set(plasma_sources "${plasma_sources}" PARENT_SCOPE)

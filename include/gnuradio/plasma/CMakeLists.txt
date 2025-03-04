@@ -21,6 +21,7 @@ install(FILES
     usrp_radar.h
     waveform_controller.h
     match_filt.h
+    advanced_doppler_processing.h # add by sumin
     doppler_processing.h
     pulse_to_cpi.h
     phase_code.h
