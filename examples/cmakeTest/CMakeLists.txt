@@ -10,7 +10,7 @@
 # Setup library
 ########################################################################
 find_package(Gnuradio REQUIRED)
-include(GrPlatform)
+
 message(STATUS "GrPlatform included from: ${CMAKE_MODULE_PATH}")
 include(GrPlatform) #define LIB_SUFFIX
 list(APPEND plasma_sources
