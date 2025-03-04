@@ -55,6 +55,7 @@ list(APPEND plasma_python_files
     usrp_radar_python.cc
     waveform_controller_python.cc
     device_python.cc
+    advanced_doppler_processing_python.cc # Add by sumin
 )
 
 GR_PYBIND_MAKE_OOT(plasma
