@@ -1,2 +1,0 @@
-/home/sumin/git_workspace/gr-plasma-kookminUniv/examples/cmakeTest/CMakeFiles/edit_cache.dir
-/home/sumin/git_workspace/gr-plasma-kookminUniv/examples/cmakeTest/CMakeFiles/rebuild_cache.dir
