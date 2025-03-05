@@ -43,7 +43,7 @@ from gnuradio import qtgui
 class pulse_doppler(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "Pulse Doppler Processing2", catch_exceptions=True)
+        gr.top_block.__init__(self, "Pulse Doppler Processing", catch_exceptions=True)
         Qt.QWidget.__init__(self)
         self.setWindowTitle("Pulse Doppler Processing")
         qtgui.util.check_set_qss()

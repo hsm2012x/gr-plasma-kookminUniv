@@ -33,22 +33,19 @@ void bind_advanced_doppler_processing(py::module& m)
     using advanced_doppler_processing = ::gr::plasma::advanced_doppler_processing;
 
 
-    py::class_<advanced_doppler_processing,
-               gr::block,
-               gr::basic_block,
-               std::shared_ptr<advanced_doppler_processing>>(
-        m, "advanced_doppler_processing", D(advanced_doppler_processing))
+    py::class_<advanced_doppler_processing, gr::block, gr::basic_block, std::shared_ptr<advanced_doppler_processing>>(
+     m, "advanced_doppler_processing", D(advanced_doppler_processing))
 
         .def(py::init(&advanced_doppler_processing::make),
-             py::arg("num_pulse_cpi"),
-             py::arg("nfft"),
+             py::arg("n_pulse_cpi"),
+             py::arg("doppler_fft_size"),
              D(advanced_doppler_processing, make))
 
 
-        .def("set_msg_queue_depth",
-             &advanced_doppler_processing::set_msg_queue_depth,
-             py::arg("arg0"),
-             D(advanced_doppler_processing, set_msg_queue_depth))
+             .def("set_msg_queue_depth",
+               &advanced_doppler_processing::set_msg_queue_depth,
+               py::arg("depth"),
+               D(advanced_doppler_processing, set_msg_queue_depth))
 
 
         .def("set_backend",
@@ -59,7 +56,6 @@ void bind_advanced_doppler_processing(py::module& m)
 
         .def("set_metadata_keys",
              &advanced_doppler_processing::set_metadata_keys,
-             py::arg("n_pulse_cpi_key"),
              py::arg("doppler_fft_size_key"),
              D(advanced_doppler_processing, set_metadata_keys))
 

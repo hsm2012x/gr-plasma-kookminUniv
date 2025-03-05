@@ -36,4 +36,4 @@ class qa_doppler_processing(gr_unittest.TestCase):
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_doppler_processing)
+    gr_unittest.run(qa_advanced_doppler_processing)
