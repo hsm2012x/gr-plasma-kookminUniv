@@ -10,6 +10,7 @@
 
 #include <gnuradio/block.h>
 #include <gnuradio/plasma/api.h>
+#include <arrayfire.h>
 #include <gnuradio/plasma/device.h>
 // #include "device.h"
 
@@ -34,14 +35,12 @@ public:
      * class. plasma::doppler_processing::make is the public interface for
      * creating new instances.
      */
-    static sptr make(size_t num_pulse_cpi, size_t nfft);
+    static sptr make(int n_pulse_cpi, int doppler_fft_size);
 
-    virtual void set_msg_queue_depth(size_t) = 0;
-
+    virtual void set_msg_queue_depth(size_t depth) = 0;
     virtual void set_backend(Device::Backend) = 0;
 
-    virtual void set_metadata_keys(const std::string& n_pulse_cpi_key,
-                                   const std::string& doppler_fft_size_key) = 0;
+    virtual void init_meta_dict(std::string doppler_fft_size_key) = 0;
 };
 
 } // namespace plasma
