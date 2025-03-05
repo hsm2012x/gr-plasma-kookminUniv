@@ -57,6 +57,26 @@ blocks:
     coordinate: [184, 132.0]
     rotation: 0
     state: enabled
+- name: advanced_plasma_pulse_doppler_0
+  id: advanced_plasma_pulse_doppler
+  parameters:
+    affinity: ''
+    alias: ''
+    backend: plasma.Device.DEFAULT
+    comment: ''
+    depth: '1'
+    doppler_fft_size_key: doppler_fft_size
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n_pulse_cpi: '128'
+    nfft: '128'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1008, 188.0]
+    rotation: 0
+    state: enabled
 - name: blocks_message_debug_0
   id: blocks_message_debug
   parameters:
@@ -136,7 +156,7 @@ blocks:
     bus_structure: null
     coordinate: [1032, 300.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: plasma_pulse_to_cpi_0
   id: plasma_pulse_to_cpi
   parameters:
@@ -210,10 +230,13 @@ blocks:
     state: true
 
 connections:
+- [advanced_plasma_pulse_doppler_0, out, plasma_range_doppler_sink_0, in]
 - [plasma_cw_to_pulsed_0, out, plasma_usrp_radar_0, in]
+- [plasma_lfm_source_0, out, advanced_plasma_pulse_doppler_0, tx]
 - [plasma_lfm_source_0, out, plasma_cw_to_pulsed_0, in]
 - [plasma_lfm_source_0, out, plasma_pulse_doppler_0, tx]
 - [plasma_pulse_doppler_0, out, plasma_range_doppler_sink_0, in]
+- [plasma_pulse_to_cpi_0, out, advanced_plasma_pulse_doppler_0, rx]
 - [plasma_pulse_to_cpi_0, out, plasma_pulse_doppler_0, rx]
 - [plasma_usrp_radar_0, out, blocks_message_debug_0, print]
 - [plasma_usrp_radar_0, out, plasma_pulse_to_cpi_0, in]

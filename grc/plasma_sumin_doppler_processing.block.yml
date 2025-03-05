@@ -1,9 +1,9 @@
-id: sumin_plasma_doppler_processing
-label: Sumin_Doppler Processing
+id: advanced_plasma_pulse_doppler
+label: Sumin Pulse-Doppler Processing
 category: '[plasma]'
 
 parameters:
-- id: num_pulse_cpi
+- id: n_pulse_cpi
   label: Pulses per CPI
   dtype: int
   default: 128
@@ -11,32 +11,29 @@ parameters:
   label: FFT size
   dtype: int
   default: 128
+- id: depth
+  label: Message Queue Depth
+  dtype: int
+  default: 1
+  hide: part
 - id: backend
   label: Backend
   dtype: enum
   options: [plasma.Device.DEFAULT, plasma.Device.CPU, plasma.Device.CUDA, plasma.Device.OPENCL]
   option_labels: [Default, CPU, Cuda, OpenCL]
-- id: depth
-  label: Message queue depth
-  dtype: int
-  default: 1
-  hide: part
-# Metadata keys
-- id: n_pulse_cpi_key
-  label: Number of pulses per CPI key
+# Metadata fields
+# TODO: Implement this feature for this block
+- id: doppler_fft_size_key
+  label: Doppler FFT Size Key
   dtype: string
-  default: 'n_pulse_cpi'
-  hide: part
+  default: doppler_fft_size
   category: Metadata
-- id: doppler_fft_size
-  label: Doppler FFT size key
-  dtype: string
-  default: 'doppler_fft_size'
   hide: part
-  category: Metadata
 
 inputs:
-- id: in
+- id: tx
+  domain: message
+- id: rx
   domain: message
 
 outputs:
@@ -46,11 +43,9 @@ outputs:
 templates:
   imports: from gnuradio import plasma
   make: |-
-    plasma.advanced_doppler_processing(${num_pulse_cpi}, ${nfft})
+    plasma.advanced_doppler_processing(${n_pulse_cpi}, ${nfft})
     self.${id}.set_msg_queue_depth(${depth})
     self.${id}.set_backend(${backend})
-    self.${id}.set_metadata_keys(${n_pulse_cpi_key}, ${doppler_fft_size})
+    self.${id}.init_meta_dict(${doppler_fft_size_key})
 
-#  'file_format' specifies the version of the GRC yml format used in the file
-#  and should usually not be changed.
 file_format: 1

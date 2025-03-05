@@ -78,24 +78,24 @@ class untitled(gr.top_block, Qt.QWidget):
         self.top_layout.addWidget(self._plasma_range_doppler_sink_0_win)
         self.plasma_pulse_to_cpi_0 = plasma.pulse_to_cpi(n_pulse_cpi)
         self.plasma_pulse_to_cpi_0.init_meta_dict('radar:n_pulse_cpi')
-        self.plasma_pulse_doppler_0 = plasma.pulse_doppler(n_pulse_cpi, n_pulse_cpi)
-        self.plasma_pulse_doppler_0.set_msg_queue_depth(100)
-        self.plasma_pulse_doppler_0.set_backend(plasma.Device.CUDA)
-        self.plasma_pulse_doppler_0.init_meta_dict('doppler_fft_size')
         self.plasma_lfm_source_0 = plasma.lfm_source(samp_rate/2, -samp_rate/4, 10e-6, samp_rate, 0)
         self.plasma_lfm_source_0.init_meta_dict('radar:bandwidth', 'radar:start_freq', 'radar:duration', 'core:sample_rate', 'core:label', 'radar:prf')
         self.plasma_cw_to_pulsed_0 = plasma.cw_to_pulsed(10e3, samp_rate)
         self.plasma_cw_to_pulsed_0.init_meta_dict('core:sample_rate', 'radar:prf')
+        self.advanced_plasma_pulse_doppler_0 = plasma.advanced_doppler_processing(128, 128)
+        self.advanced_plasma_pulse_doppler_0.set_msg_queue_depth(1)
+        self.advanced_plasma_pulse_doppler_0.set_backend(plasma.Device.DEFAULT)
+        self.advanced_plasma_pulse_doppler_0.init_meta_dict('doppler_fft_size')
 
 
         ##################################################
         # Connections
         ##################################################
+        self.msg_connect((self.advanced_plasma_pulse_doppler_0, 'out'), (self.plasma_range_doppler_sink_0, 'in'))
         self.msg_connect((self.plasma_cw_to_pulsed_0, 'out'), (self.plasma_usrp_radar_0, 'in'))
+        self.msg_connect((self.plasma_lfm_source_0, 'out'), (self.advanced_plasma_pulse_doppler_0, 'tx'))
         self.msg_connect((self.plasma_lfm_source_0, 'out'), (self.plasma_cw_to_pulsed_0, 'in'))
-        self.msg_connect((self.plasma_lfm_source_0, 'out'), (self.plasma_pulse_doppler_0, 'tx'))
-        self.msg_connect((self.plasma_pulse_doppler_0, 'out'), (self.plasma_range_doppler_sink_0, 'in'))
-        self.msg_connect((self.plasma_pulse_to_cpi_0, 'out'), (self.plasma_pulse_doppler_0, 'rx'))
+        self.msg_connect((self.plasma_pulse_to_cpi_0, 'out'), (self.advanced_plasma_pulse_doppler_0, 'rx'))
         self.msg_connect((self.plasma_usrp_radar_0, 'out'), (self.plasma_pulse_to_cpi_0, 'in'))
 
 
